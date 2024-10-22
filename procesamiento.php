@@ -11,6 +11,51 @@
         padding: 0;
         box-sizing: border-box;
     }
+    body{
+        background-color: rgb(15, 0, 34);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    #form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    #form > div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 80%;
+        gap: 3rem;
+    }
+    #form >div>div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0px 0px 20px black;
+        background-color: rgb(35, 0, 82);
+    }
+    #form >div>div>label{
+        color: white;
+        font-weight: bolder;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 15px white;
+    }
+    #form >div>div>input{
+        background: transparent;
+        border: 1px solid white;
+        padding: 1rem 1.5rem;
+        text-align: center;
+        border-radius: 20px;
+    }
     h1, h2, h3, h4, p, a, input, label, tr{
         font-family: "system-ui";
     }
@@ -99,13 +144,17 @@
         }else{
     ?>
         <!-- CREAMOS EL FORMULARIO -->
-        <form action="procesamiento.php" method="post" enctype="multipart/form-data">
+        <form id="form" action="procesamiento.php" method="post" enctype="multipart/form-data">
+            <div>
             <?php
                 for ($i=0; $i < 7; $i++) { 
+                    echo "<div>";
                     echo "<label for=\"text$i\">Introduce la cadena $i:</label>";
                     echo "<input type=\"text\" name=\"text$i\" placeholder=\"Introduce una cadena\">";
+                    echo "</div>";
                 }
             ?>
+            </div>
             <input type="submit" value="Enviar todo" name="submit">
         </form>
     <?php
