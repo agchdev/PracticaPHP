@@ -16,7 +16,16 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
         height: 100vh;
+    }
+    h1{
+        color: white;
+        font-weight: bolder;
+        text-shadow: 0 0 15px white;
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 3rem;
     }
     #form{
         display: flex;
@@ -58,6 +67,23 @@
         color: white;
         font-weight: bolder;
     }
+    .envio{
+        background: transparent;
+        border: none;
+        padding: 1rem 1.5rem; 
+        background-color: rgb(35, 0, 82);
+        color: white;
+        font-weight: bolder;
+        border-radius: 20px;
+        margin-top: 40px;
+        box-shadow: 0px 0px 20px black;
+        transition: all .4s ease;
+    }
+    .envio:hover{
+        box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.417);
+        text-shadow: 0 0 15px white;
+        /*background-color: rgb(172, 108, 255); */
+    }
     h1, h2, h3, h4, p, a, input, label, tr{
         font-family: "system-ui";
     }
@@ -70,6 +96,7 @@
     }
 </style>
 <body>
+    <h1>LA MEGAPRÁTICA DE PHP</h1>
     <?php
         if (isset($_POST["submit"])) {
             // Almaceno todas las cadenas en un array
@@ -157,7 +184,7 @@
                 }
             ?>
             </div>
-            <input type="submit" value="Enviar todo" name="submit">
+            <input class="envio" type="submit" value="Enviar todo" name="submit">
         </form>
     <?php
         }
