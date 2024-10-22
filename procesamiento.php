@@ -46,7 +46,7 @@
         color: white;
         font-weight: bolder;
         text-transform: uppercase;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
         text-shadow: 0 0 15px white;
     }
     #form >div>div>input{
@@ -55,6 +55,8 @@
         padding: 1rem 1.5rem;
         text-align: center;
         border-radius: 20px;
+        color: white;
+        font-weight: bolder;
     }
     h1, h2, h3, h4, p, a, input, label, tr{
         font-family: "system-ui";
