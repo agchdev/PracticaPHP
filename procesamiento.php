@@ -258,6 +258,14 @@
 
                 if(preg_match("'^\+(\d{2})\s?(6|7|8|9)\d{8}$'", $cad)) echo "<td class=\"acierto\">NUMERO DE TELÉFONO</td>";
 
+                //DNI Explicación:
+
+                // ^[0-9]{8} La cadena debe empezar por una cadena de 8 numeros de entre el 0 y el 9
+                // [A-Z] La cadena a continuación debe contener un carácter mayúscula
+                // $ — Fin de la cadena.
+
+                if(preg_match("'^[0-9]{8}[A-Z]$'", $cad)) echo "<td class=\"acierto\">NUMERO DE TELÉFONO</td>";
+
                 echo "</tr>";
             }
 
