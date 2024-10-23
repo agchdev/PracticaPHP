@@ -41,7 +41,12 @@
         width: 80%;
         gap: 3rem;
     }
-    #form >div>div{
+    #form > div:nth-child(2){
+        gap: 0;
+        width: 20%;
+        margin-top: 3rem;
+    }
+    .cajaInput{
         display: flex;
         justify-content: center;
         align-items: center;
@@ -49,16 +54,17 @@
         padding: 30px;
         border-radius: 20px;
         box-shadow: 0px 0px 20px black;
-        background-color: rgb(35, 0, 82);
+        background-color: rgb(35, 0, 82);  
     }
-    #form >div>div>label{
+    .labelForm{
         color: white;
         font-weight: bolder;
         text-transform: uppercase;
         margin-bottom: 2rem;
         text-shadow: 0 0 15px white;
     }
-    #form >div>div>input{
+    .inputForm{
+        max-width: 100%;
         background: transparent;
         border: 1px solid white;
         padding: 1rem 1.5rem;
@@ -76,13 +82,12 @@
         font-weight: bolder;
         border-radius: 20px;
         margin-top: 40px;
-        box-shadow: 0px 0px 20px black;
+        box-shadow: 0px 0px 0px black;
         transition: all .4s ease;
     }
     .envio:hover{
-        box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.417);
-        text-shadow: 0 0 15px white;
-        /*background-color: rgb(172, 108, 255); */
+        transform: translateY(-10px);
+        box-shadow: 0px 10px 20px black;
     }
     h1, h2, h3, h4, p, a, input, label, tr{
         font-family: "system-ui";
@@ -93,6 +98,58 @@
         text-shadow: 0 0 15px green;
         text-align: center;
         text-transform: uppercase;
+    }
+
+    /* ESTILOS INPUT RADIO */
+    
+    .radio-input{
+        margin-top: 20px;
+    }
+    .input {
+        -webkit-appearance: none;
+        display: block;
+        width: 24px;
+        height: 24px;
+        border-radius: 12px;
+        cursor: pointer;
+        vertical-align: middle;
+        box-shadow: hsla(0,0%,100%,.15) 0 1px 1px, inset hsla(0,0%,0%,.5) 0 0 0 1px;
+        background-color: hsla(0,0%,0%,.2);
+        background-image: -webkit-radial-gradient( hsla(200,100%,90%,1) 0%, hsla(200,100%,70%,1) 15%, hsla(200,100%,60%,.3) 28%, hsla(200,100%,30%,0) 70% );
+        background-repeat: no-repeat;
+        -webkit-transition: background-position .15s cubic-bezier(.8, 0, 1, 1),
+        -webkit-transform .25s cubic-bezier(.8, 0, 1, 1);
+        outline: none;
+    }
+
+    .input:checked {
+        -webkit-transition: background-position .2s .15s cubic-bezier(0, 0, .2, 1),
+        -webkit-transform .25s cubic-bezier(0, 0, .2, 1);
+    }
+
+    .input:active {
+        -webkit-transform: scale(1.5);
+        -webkit-transition: -webkit-transform .1s cubic-bezier(0, 0, .2, 1);
+    }
+
+
+
+    /* Direcciones izquierda y derecha del radio */
+
+    .input:active {
+        background-position: -24px 0 ;
+    }
+    .input{
+        background-position: 24px 0 ;
+    }
+
+    .input:checked {
+        background-position: 0 0;
+    }   
+
+    .input:checked ~ .input,
+    .input:checked ~ .input:active {
+        background-position: 24px 0;
     }
 </style>
 <body>
@@ -177,12 +234,24 @@
             <div>
             <?php
                 for ($i=0; $i < 7; $i++) { 
-                    echo "<div>";
-                    echo "<label for=\"text$i\">Introduce la cadena $i:</label>";
-                    echo "<input type=\"text\" name=\"text$i\" placeholder=\"Introduce una cadena\">";
+                    echo "<div class=\"cajaInput\">";
+                    echo "<label class=\"labelForm\" for=\"text$i\">Introduce la cadena $i:</label>";
+                    echo "<input class=\"inputForm\" type=\"text\" name=\"text$i\" placeholder=\"Introduce una cadena\">";
+                    ?>
+                    <div class="radio-input">
+                        <input name="radio" type="radio" class="input">
+                    </div>
+                    <?php
                     echo "</div>";
                 }
             ?>
+            </div>
+            <div class="cajaInput">
+                <label class="labelForm" for="img">Introduce una imagen:</label>
+                <input class="inputForm" type="file" name="img">
+            </div>
+            <div>
+
             </div>
             <input class="envio" type="submit" value="Enviar todo" name="submit">
         </form>
