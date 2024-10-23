@@ -183,7 +183,7 @@
             // Almaceno todas las cadenas en un array
 
             $cadenas = [];
-            $formatoDesc = true;
+            
             for ($i=0; $i < 7; $i++) { 
                 $cadenas[] = $_POST["text$i"];
             }
@@ -192,13 +192,14 @@
             echo "<table>";
 
             foreach($cadenas as $cad){
+                $formatoDesc = true;
                 echo "<tr><th>$cad</th>";
 
                 //CADENA VACIA Explicación:
                 //  - empty(): Comprueba si la cadena está vacía
 
                 if(empty($cad)){
-                    echo "<td class=\"acierto\">VACÍO</td>"
+                    echo "<td class=\"acierto\">VACÍO</td>";
                     $formatoDesc = false;
                 };
 
@@ -236,7 +237,7 @@
                 // - \w+$ asegura que la cadena termine con otra palabra (la tercera palabra).
                 // - $ indica el final de la cadena.
 
-                if(preg_match("'^(\w+\s*,\s*){2,}\w+$'", $cad))
+                if(preg_match("'^(\w+\s*,\s*){2,}\w+$'", $cad)){
                     echo "<td class=\"acierto\">MAS PALABRAS</td>";
                     $formatoDesc = false;
                 }
@@ -302,6 +303,8 @@
                     echo "<td class=\"acierto\">CONRTASEÑA</td>";
                     $formatoDesc = false;
                 }
+
+                if($formatoDesc == true) echo "<td class=\"acierto\">FORMATO DESCONOCIDO</td>";
 
 
 
