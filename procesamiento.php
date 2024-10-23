@@ -27,6 +27,9 @@
         text-transform: uppercase;
         margin-bottom: 3rem;
     }
+
+    /* ESTILOS DEL FORMULARIO */
+
     #form{
         display: flex;
         justify-content: center;
@@ -92,6 +95,27 @@
     h1, h2, h3, h4, p, a, input, label, tr{
         font-family: "system-ui";
     }
+
+    /* ESTILOS DEL PROCESAMIENTO */
+    table{
+        border-collapse: collapse;
+        box-shadow: 0px 0px 10px #230052;
+        border-radius: 30px;
+        overflow: hidden;
+    }
+    td{
+        padding: 1.5rem 2rem;
+        border: 1px solid #230052;
+    }
+    th{
+        border: 1px solid #230052;
+        padding: 1.5rem 2rem;
+        color: white;
+        font-weight: bolder;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.511);
+        text-align: center;
+        text-transform: uppercase;
+    }
     .acierto{
         color: green;
         font-weight: bolder;
@@ -101,7 +125,7 @@
     }
 
     /* ESTILOS INPUT RADIO */
-    
+
     .radio-input{
         margin-top: 20px;
     }
