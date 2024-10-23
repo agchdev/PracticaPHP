@@ -183,6 +183,7 @@
             // Almaceno todas las cadenas en un array
 
             $cadenas = [];
+            $formatoDesc = true;
             for ($i=0; $i < 7; $i++) { 
                 $cadenas[] = $_POST["text$i"];
             }
@@ -196,7 +197,10 @@
                 //CADENA VACIA Explicación:
                 //  - empty(): Comprueba si la cadena está vacía
 
-                if(empty($cad)) echo "<td class=\"acierto\">VACÍO</td>";
+                if(empty($cad)){
+                    echo "<td class=\"acierto\">VACÍO</td>"
+                    $formatoDesc = false;
+                };
 
                 // UNA PALABRA Explicación:
                 // - ^ indica el inicio de la cadena.
@@ -204,7 +208,10 @@
                 // - + indica que debe haber al menos un carácter alfanumérico.
                 // - $ indica el final de la cadena.
 
-                if(preg_match("'^\w+$'", $cad)) echo "<td class=\"acierto\">UNA PALABRA</td>";
+                if(preg_match("'^\w+$'", $cad)){
+                    echo "<td class=\"acierto\">UNA PALABRA</td>";
+                    $formatoDesc = false;
+                }
 
                 // 2 PALABRAS Explicación:
                 // - ^ indica el inicio de la cadena.
@@ -213,7 +220,10 @@
                 // - \w+ coincide con una o más letras, números o guiones bajos (esto representa la segunda palabra).
                 // - $ indica el final de la cadena. 
 
-                if(preg_match("'^\w+\s+\w+$'", $cad)) echo "<td class=\"acierto\">DOS PALABRA</td>";
+                if(preg_match("'^\w+\s+\w+$'", $cad)){
+                    echo "<td class=\"acierto\">DOS PALABRA</td>";
+                    $formatoDesc = false;
+                }
 
                 // +2 PALABRAS Explicación:
                 // - ^ indica el inicio de la cadena.
@@ -226,14 +236,20 @@
                 // - \w+$ asegura que la cadena termine con otra palabra (la tercera palabra).
                 // - $ indica el final de la cadena.
 
-                if(preg_match("'^(\w+\s*,\s*){2,}\w+$'", $cad)) echo "<td class=\"acierto\">MAS PALABRAS</td>";
+                if(preg_match("'^(\w+\s*,\s*){2,}\w+$'", $cad))
+                    echo "<td class=\"acierto\">MAS PALABRAS</td>";
+                    $formatoDesc = false;
+                }
 
                 // NUMERO DECIMAL EN CADENA Explicación:
                 // \d+: coincide con uno o más dígitos (números).
                 // \.: coincide con un punto decimal. (El punto debe ser escapado con \ porque en las expresiones regulares, el punto tiene un significado especial).
                 // \d+: coincide con uno o más dígitos (números) después del punto decimal.
                 
-                if(preg_match("'\d+\.\d+'", $cad)) echo "<td class=\"acierto\">NUMERO DECIMAL</td>";
+                if(preg_match("'\d+\.\d+'", $cad)){
+                    echo "<td class=\"acierto\">NUMERO DECIMAL</td>";
+                    $formatoDesc = false;
+                }
 
                 //CADENA CON UN UNICO NUMERO IMPAR Explicación:
                 // ^: Indica el inicio de la cadena.
@@ -245,7 +261,10 @@
                 // \b[13579]\b: Coincide exactamente con un dígito impar (1, 3, 5, 7 o 9) en una palabra completa, usando \b para asegurar que sea un límite de palabra.
                 // .*$: Coincide con cualquier carácter (cero o más veces) hasta el final de la cadena.
 
-                if(preg_match("'^(?!.*\b\d*[13579]\b.*\b\d*[13579]\b).*?\b\d*[13579]\b$'", $cad)) echo "<td class=\"acierto\">NUMERO DECIMAL</td>";
+                if(preg_match("'^(?!.*\b\d*[13579]\b.*\b\d*[13579]\b).*?\b\d*[13579]\b$'", $cad)){
+                    echo "<td class=\"acierto\">NUMERO DECIMAL</td>";
+                    $formatoDesc = false;
+                }
 
                 //NUMERO DE TELEFONO Explicación:
 
@@ -256,7 +275,10 @@
                 // \d{8} — Ocho dígitos adicionales para completar el número.
                 // $ — Fin de la cadena.
 
-                if(preg_match("'^\+(\d{2})\s?(6|7|8|9)\d{8}$'", $cad)) echo "<td class=\"acierto\">NUMERO DE TELÉFONO</td>";
+                if(preg_match("'^\+(\d{2})\s?(6|7|8|9)\d{8}$'", $cad)){
+                    echo "<td class=\"acierto\">NUMERO DE TELÉFONO</td>";
+                    $formatoDesc = false;
+                }
 
                 //DNI Explicación:
 
@@ -264,7 +286,10 @@
                 // [A-Z] La cadena a continuación debe contener un carácter mayúscula
                 // $ — Fin de la cadena.
 
-                if(preg_match("'^[0-9]{8}[A-Z]$'", $cad)) echo "<td class=\"acierto\">NUMERO DE TELÉFONO</td>";
+                if(preg_match("'^[0-9]{8}[A-Z]$'", $cad)) {
+                    echo "<td class=\"acierto\">NUMERO DE TELÉFONO</td>";
+                    $formatoDesc = false;
+                }
 
                 // Contraseña (al menos seis caracteres, debe contener
                 // a. Debe tener entre 8 y 20 caracteres.
@@ -273,7 +298,10 @@
                 // c. Debe contener al menos 1 letra mayúscula y 3 caracteres
                 // especiales (no consecutivos)
 
-                if(preg_match("'^(?=.*[A-Z])(?=(?:[^0-9]*[0-9][^0-9]*){2})(?=(?:[^!@#$%^&*()_+|~=`{}\[\]:;\"\'<>?,.\/]*[!@#$%^&*()_+|~=`{}\[\]:;\"\'<>?,.\/][^!@#$%^&*()_+|~=`{}\[\]:;\"\'<>?,.\/]*){3})[A-Za-z0-9!@#$%^&*()_+|~=`{}\[\]:;\"\'<>?,.\/]{8,20}$'", $cad)) echo "<td class=\"acierto\">CONRTASEÑA</td>";
+                if(preg_match("'^(?=.*[A-Z])(?=(?:[^0-9]*[0-9][^0-9]*){2})(?=(?:[^!@#$%^&*()_+|~=`{}\[\]:;\"\'<>?,.\/]*[!@#$%^&*()_+|~=`{}\[\]:;\"\'<>?,.\/][^!@#$%^&*()_+|~=`{}\[\]:;\"\'<>?,.\/]*){3})[A-Za-z0-9!@#$%^&*()_+|~=`{}\[\]:;\"\'<>?,.\/]{8,20}$'", $cad)){
+                    echo "<td class=\"acierto\">CONRTASEÑA</td>";
+                    $formatoDesc = false;
+                }
 
 
 
