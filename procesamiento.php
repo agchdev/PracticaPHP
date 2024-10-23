@@ -247,6 +247,17 @@
 
                 if(preg_match("'^(?!.*\b\d*[13579]\b.*\b\d*[13579]\b).*?\b\d*[13579]\b$'", $cad)) echo "<td class=\"acierto\">NUMERO DECIMAL</td>";
 
+                //NUMERO DE TELEFONO Explicación:
+
+                // ^\+ — El número debe empezar con el signo +.
+                // (\d{2}) — Dos dígitos para el prefijo.
+                // \s? — Espacio opcional después del prefijo.
+                // (6|7|8|9) — El primer dígito del número debe ser 6, 7, 8 o 9.
+                // \d{8} — Ocho dígitos adicionales para completar el número.
+                // $ — Fin de la cadena.
+
+                if(preg_match("'^\+(\d{2})\s?(6|7|8|9)\d{8}$'", $cad)) echo "<td class=\"acierto\">NUMERO DE TELÉFONO</td>";
+
                 echo "</tr>";
             }
 
