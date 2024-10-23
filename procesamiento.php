@@ -266,6 +266,17 @@
 
                 if(preg_match("'^[0-9]{8}[A-Z]$'", $cad)) echo "<td class=\"acierto\">NUMERO DE TELÉFONO</td>";
 
+                // Contraseña (al menos seis caracteres, debe contener
+                // a. Debe tener entre 8 y 20 caracteres.
+                // b. Debe contener al menos 2 números (no tienen que ser
+                // consecutivos).
+                // c. Debe contener al menos 1 letra mayúscula y 3 caracteres
+                // especiales (no consecutivos)
+
+                if(preg_match("'^(?=.*[A-Z])(?=(?:[^0-9]*[0-9][^0-9]*){2})(?=(?:[^!@#$%^&*()_+|~=`{}\[\]:;\"\'<>?,.\/]*[!@#$%^&*()_+|~=`{}\[\]:;\"\'<>?,.\/][^!@#$%^&*()_+|~=`{}\[\]:;\"\'<>?,.\/]*){3})[A-Za-z0-9!@#$%^&*()_+|~=`{}\[\]:;\"\'<>?,.\/]{8,20}$'", $cad)) echo "<td class=\"acierto\">CONRTASEÑA</td>";
+
+
+
                 echo "</tr>";
             }
 
