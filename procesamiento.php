@@ -85,6 +85,7 @@
         font-weight: bolder;
         border-radius: 20px;
         margin-top: 40px;
+        margin-bottom: 40px;
         box-shadow: 0px 0px 0px black;
         transition: all .4s ease;
     }
@@ -266,11 +267,11 @@
 
                 // UNA PALABRA Explicación:
                 // - ^ indica el inicio de la cadena.
-                // - \w coincide con cualquier carácter alfanumérico (letras y números) y guiones bajos.
+                // - [a-zA-Z] coincide con cualquier carácter (letras).
                 // - + indica que debe haber al menos un carácter alfanumérico.
                 // - $ indica el final de la cadena.
 
-                if(preg_match("'^\w+$'", $cad)){
+                if(preg_match("'^([a-zA-Z]+)$'", $cad)){
                     echo "<td class=\"acierto\">UNA PALABRA</td>";
                     $formatoDesc = false;
                 }
@@ -295,10 +296,10 @@
                 // - ,: una coma.
                 // - \s*: cero o más espacios en blanco.
                 // - {2,} indica que el patrón anterior debe repetirse al menos 2 veces (esto suma un total de 3 palabras).
-                // - \w+$ asegura que la cadena termine con otra palabra (la tercera palabra).
+                // - (\s*\w+\s*)% asegura que la cadena termine con otra palabra (la tercera palabra) con espacios por ambos lados.
                 // - $ indica el final de la cadena.
 
-                if(preg_match("'^(\w+\s*,\s*){2,}\w+$'", $cad)){
+                if(preg_match("'^(\s*\w+\s*,){2,}(\s*\w+\s*)$'", $cad)){
                     echo "<td class=\"acierto\">MAS PALABRAS</td>";
                     $formatoDesc = false;
                 }
@@ -314,17 +315,10 @@
                 }
 
                 //CADENA CON UN UNICO NUMERO IMPAR Explicación:
-                // ^: Indica el inicio de la cadena.
-                // (?!.*\d*[13579].*\d*[13579]): Esta parte utiliza una afirmación negativa para asegurarse de que no haya más de un dígito impar en la cadena.
-                // .*: Coincide con cualquier carácter (cero o más veces).
-                // \d*[13579]: Coincide con cualquier número de dígitos seguido de un dígito impar.
-                // .*: Coincide nuevamente con cualquier carácter.
-                // .*: Coincide con cualquier carácter (cero o más veces) antes del número impar.
-                // \b[13579]\b: Coincide exactamente con un dígito impar (1, 3, 5, 7 o 9) en una palabra completa, usando \b para asegurar que sea un límite de palabra.
-                // .*$: Coincide con cualquier carácter (cero o más veces) hasta el final de la cadena.
+                // [0-9]*[13579] Que contenga un numero de da igual cuantos digitos 
 
-                if(preg_match("'^(?!.*\b\d*[13579]\b.*\b\d*[13579]\b).*?\b\d*[13579]\b$'", $cad)){
-                    echo "<td class=\"acierto\">NUMERO DECIMAL</td>";
+                if(preg_match("'\d*[13579]'", $cad)){
+                    echo "<td class=\"acierto\">NUMERO IMPART</td>";
                     $formatoDesc = false;
                 }
 
@@ -393,7 +387,7 @@
                   </div>";
         }else{
             if(isset($_GET["err"])){
-                if($_GET["err"] == 3) echo "<p class=\"error\">Tienes que seleccionar una palabra</p>";
+                if($_GET["err"] == 3) echo "<p class=\"error\" style=\"margin-bottom: 2rem;\">Tienes que seleccionar una palabra</p>";
             }
     ?>
         <!-- CREAMOS EL FORMULARIO -->
