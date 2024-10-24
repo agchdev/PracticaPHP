@@ -195,8 +195,7 @@
             $tiposImagenes = ["jpeg", "png", "gif", "webp", "svg"];
 
             //Extraigo solo el tipo de formato
-
-            if(empty($_FILES["img"]["tmp_img"])){ //Compruebo que me pasa una imagen
+            if(empty($_FILES["img"]["tmp_name"])){ //Compruebo que me pasa una imagen
                 // header("Location: procesamiento.php?err=3");
             ?>
             <!-- NO ME FUNCIONA EL HEADER :( -->
@@ -215,7 +214,7 @@
                         break; // Sal del bucle una vez que encuentre un tipo válido
                     }
                 }
-                if($erroArchi || empty($_FILES["img"]["type"])){
+                if($erroArchi){
                     // header("Location: procesamiento.php?err=3");
                     ?>
                     <!-- NO ME FUNCIONA EL HEADER :( -->
