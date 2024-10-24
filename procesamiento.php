@@ -18,7 +18,6 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        height: 100vh;
     }
     h1{
         color: white;
@@ -26,7 +25,7 @@
         text-shadow: 0 0 15px white;
         text-align: center;
         text-transform: uppercase;
-        margin-bottom: 3rem;
+        margin: 3rem 0;
     }
 
     /* ESTILOS DEL FORMULARIO */
@@ -183,11 +182,30 @@
     .input:checked ~ .input:active {
         background-position: 24px 0;
     }
+
+    /* ESTILOS IMAGEN DEL USUARIO */
+    .imagenUsu{
+        margin-top: 2rem;
+        width: 30%;
+    }
+    .imagenUsu > img{
+        max-width: 100%;
+        border-radius: 2rem;
+        border: 10px solid #230052;
+        filter: drop-shadow(0px 0px 10px #8e38ff56);
+    }
 </style>
 <body>
     <h1>LA MEGAPRÁTICA DE PHP</h1>
 <?php ob_start();
         if (isset($_POST["submit"])) {
+
+            if(empty($rad = $_POST["radio"])){
+                ?>
+                <!-- NO ME FUNCIONA EL HEADER :( -->
+                <script> location.replace("procesamiento.php?err=3"); </script>
+                <?php
+            }
 
             //CONTROL DE IMAGEN
 
@@ -209,7 +227,6 @@
 
                 foreach($tiposImagenes as $el){  //Recorro los tipos de imágenes
                     if($el == $tipoArchivo){ // Compruebo que coincide con algun tipo de archivo
-                        echo "<p class=\"acierto\">valido</p>"; // Si es válida lo muestro
                         $erroArchi = false; // Ya no hay error
                         break; // Sal del bucle una vez que encuentre un tipo válido
                     }
@@ -265,7 +282,7 @@
                 // - \w+ coincide con una o más letras, números o guiones bajos (esto representa la segunda palabra).
                 // - $ indica el final de la cadena. 
 
-                if(preg_match("'^\w+\s+\w+$'", $cad)){
+                if(preg_match("'^\s*([a-zA-Z]+)\s+([a-zA-Z]+)\s*$'", $cad)){
                     echo "<td class=\"acierto\">DOS PALABRA</td>";
                     $formatoDesc = false;
                 }
@@ -364,13 +381,20 @@
             }
 
             $origen = $_FILES["img"]["tmp_name"]; // Guardamos la ruta temporal de la imagen
-            $nomOrig = $_FILES["img"]["name"];
-            $rad = $_POST["radio"]; // Sacamos la posicion del select
-            $nuevoNom = $_POST[$rad]; // Saco que vale esa posicion del select
-            $destino = $ruta.$nomOrig; // Creo la ruta de guardado con el nuevo nombre
+            
+            $nuevoNom = $_POST[$rad].".".$tipoArchivo; // Saco que vale esa posicion del select
+            $destino = $ruta.$nuevoNom; // Creo la ruta de guardado con el nuevo nombre
 
-            move_uploaded_file($destino, $origen); // Lo desplazo a la nueva ruta
+            move_uploaded_file($origen, $destino); // Lo desplazo a la nueva ruta
+
+
+            echo "<div class=\"imagenUsu\">
+                    <img src=\"$destino\">
+                  </div>";
         }else{
+            if(isset($_GET["err"])){
+                if($_GET["err"] == 3) echo "<p class=\"error\">Tienes que seleccionar una palabra</p>";
+            }
     ?>
         <!-- CREAMOS EL FORMULARIO -->
         <form id="form" action="procesamiento.php" method="post" enctype="multipart/form-data">
