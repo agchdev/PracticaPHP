@@ -202,8 +202,8 @@
             <script> location.replace("procesamiento.php?err=1"); </script>
             <?php
             }else{
-                $origen = $_FILES["img"]["type"]; //Saco el tipo de archivo
-                $aux = explode("/", $origen); // Separo el formato de imagen
+                $tipo = $_FILES["img"]["type"]; //Saco el tipo de archivo
+                $aux = explode("/", $tipo); // Separo el formato de imagen
                 $tipoArchivo = $aux[1]; // Almaceno solo la parte del tipo de imagen
                 $erroArchi = true; // Para decir si es un archivo con un formato no disponible
 
@@ -356,6 +356,20 @@
             }
 
             echo "</table>";
+
+            $ruta = "./img/"; //Creamos la ruta
+
+            if(!file_exists($ruta)){ // Comprobamos si existe la ruta
+                mkdir($ruta); // Se crea en caso de que no exista
+            }
+
+            $origen = $_FILES["img"]["tmp_name"]; // Guardamos la ruta temporal de la imagen
+            $nomOrig = $_FILES["img"]["name"];
+            $rad = $_POST["radio"]; // Sacamos la posicion del select
+            $nuevoNom = $_POST[$rad]; // Saco que vale esa posicion del select
+            $destino = $ruta.$nomOrig; // Creo la ruta de guardado con el nuevo nombre
+
+            move_uploaded_file($destino, $origen); // Lo desplazo a la nueva ruta
         }else{
     ?>
         <!-- CREAMOS EL FORMULARIO -->
@@ -366,10 +380,11 @@
                     echo "<div class=\"cajaInput\">";
                     echo "<label class=\"labelForm\" for=\"text$i\">Introduce la cadena $i:</label>";
                     echo "<input class=\"inputForm\" type=\"text\" name=\"text$i\" placeholder=\"Introduce una cadena\">";
+                    echo "  <div class=\"radio-input\">
+                                <input name=\"radio\" type=\"radio\" class=\"input\" value=\"text$i\">
+                            </div>"
                     ?>
-                    <div class="radio-input">
-                        <input name="radio" type="radio" class="input">
-                    </div>
+                    
                     <?php
                     echo "</div>";
                 }
