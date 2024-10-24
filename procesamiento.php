@@ -10,6 +10,7 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        color: white;
     }
     body{
         background-color: rgb(15, 0, 34);
@@ -123,6 +124,13 @@
         text-align: center;
         text-transform: uppercase;
     }
+    .error{
+        color: red;
+        font-weight: bolder;
+        text-shadow: 0 0 15px red;
+        text-align: center;
+        text-transform: uppercase;
+    }
 
     /* ESTILOS INPUT RADIO */
 
@@ -178,8 +186,45 @@
 </style>
 <body>
     <h1>LA MEGAPRÁTICA DE PHP</h1>
-    <?php
+<?php ob_start();
         if (isset($_POST["submit"])) {
+
+            //CONTROL DE IMAGEN
+
+            //Creo un array con todos los tipos de imagenes que permito
+            $tiposImagenes = ["jpeg", "png", "gif", "webp", "svg"];
+
+            //Extraigo solo el tipo de formato
+
+            if(empty($_FILES["img"]["tmp_img"])){ //Compruebo que me pasa una imagen
+                // header("Location: procesamiento.php?err=3");
+            ?>
+            <!-- NO ME FUNCIONA EL HEADER :( -->
+            <script> location.replace("procesamiento.php?err=1"); </script>
+            <?php
+            }else{
+                $origen = $_FILES["img"]["type"]; //Saco el tipo de archivo
+                $aux = explode("/", $origen); // Separo el formato de imagen
+                $tipoArchivo = $aux[1]; // Almaceno solo la parte del tipo de imagen
+                $erroArchi = true; // Para decir si es un archivo con un formato no disponible
+
+                foreach($tiposImagenes as $el){  //Recorro los tipos de imágenes
+                    if($el == $tipoArchivo){ // Compruebo que coincide con algun tipo de archivo
+                        echo "<p class=\"acierto\">valido</p>"; // Si es válida lo muestro
+                        $erroArchi = false; // Ya no hay error
+                        break; // Sal del bucle una vez que encuentre un tipo válido
+                    }
+                }
+                if($erroArchi || empty($_FILES["img"]["type"])){
+                    // header("Location: procesamiento.php?err=3");
+                    ?>
+                    <!-- NO ME FUNCIONA EL HEADER :( -->
+                    <script> location.replace("procesamiento.php?err=2"); </script>
+                    <?php
+                }
+            }
+
+
             // Almaceno todas las cadenas en un array
 
             $cadenas = [];
@@ -312,31 +357,6 @@
             }
 
             echo "</table>";
-            
-            //CONTROL DE IMAGEN
-
-            //Creo un array con todos los tipos de imagenes que permito
-            $tiposImagenes = ["jpeg", "png", "gif", "webp", "svg"];
-
-            //Extraigo solo el tipo de formato
-            $origen = $_FILES["img"]["type"];
-            $aux = explode("/", $origen);
-            $tipoArchivo = $aux[1];
-            $erroArchi = true;
-
-            foreach($tiposImagenes as $el){ 
-                if($el == $tipoArchivo){ 
-                    echo "<p class=\"acierto\">valido</p>";
-                    $erroArchi = false;
-                    break; // Sal del bucle una vez que encuentre un tipo válido
-                }
-            }
-            if($erroArchi || empty($_FILES["img"]["type"])){
-                header("Location: procesamiento.php?err=3");
-            }
-
-
-            echo $tipoArchivo;
         }else{
     ?>
         <!-- CREAMOS EL FORMULARIO -->
@@ -357,6 +377,12 @@
             ?>
             </div>
             <div class="cajaInput">
+                <?php
+                if(isset($_GET["err"])){
+                    if($_GET["err"] == 1) echo "<p class=\"error\">No dejes este campo vacío</p>";
+                    if($_GET["err"] == 2) echo "<p class=\"error\">Formato no válido</p>";
+                }
+                ?>
                 <label class="labelForm" for="img">Introduce una imagen:</label>
                 <input class="inputForm" type="file" name="img">
             </div>
