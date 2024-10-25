@@ -317,7 +317,7 @@
                 //CADENA CON UN UNICO NUMERO IMPAR Explicación:
                 // [0-9]*[13579] Que contenga un numero de da igual cuantos digitos 
 
-                if(preg_match("'(?=.[0-9])\d*[13579]$'", $cad)){
+                if(preg_match("'(?=.[0-9])\d*[13579]([a-zA-Z]|\.)*'", $cad)){
                     echo "<td class=\"acierto\">NUMERO IMPAR</td>";
                     $formatoDesc = false;
                 }
