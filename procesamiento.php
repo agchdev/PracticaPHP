@@ -115,7 +115,6 @@
         font-weight: bolder;
         text-shadow: 0 0 15px rgba(255, 255, 255, 0.511);
         text-align: center;
-        text-transform: uppercase;
     }
     .acierto{
         color: green;
@@ -266,12 +265,13 @@
                 };
 
                 // UNA PALABRA Explicación:
+                // - \s* permite espacios
                 // - ^ indica el inicio de la cadena.
                 // - [a-zA-Z] coincide con cualquier carácter (letras).
                 // - + indica que debe haber al menos un carácter alfanumérico.
                 // - $ indica el final de la cadena.
 
-                if(preg_match("'^([a-zA-Z]+)$'", $cad)){
+                if(preg_match("'^\s*([a-zA-Z]+)\s*$'", $cad)){
                     echo "<td class=\"acierto\">UNA PALABRA</td>";
                     $formatoDesc = false;
                 }
@@ -317,8 +317,8 @@
                 //CADENA CON UN UNICO NUMERO IMPAR Explicación:
                 // [0-9]*[13579] Que contenga un numero de da igual cuantos digitos 
 
-                if(preg_match("'([0-9]*[13579][a-zA-Z\s.,]){1}'", $cad)){
-                    echo "<td class=\"acierto\">NUMERO IMPART</td>";
+                if(preg_match("'(?=.[0-9])\d*[13579]$'", $cad)){
+                    echo "<td class=\"acierto\">NUMERO IMPAR</td>";
                     $formatoDesc = false;
                 }
 
@@ -343,7 +343,7 @@
                 // $ — Fin de la cadena.
 
                 if(preg_match("'^[0-9]{8}[A-Z]$'", $cad)) {
-                    echo "<td class=\"acierto\">NUMERO DE TELÉFONO</td>";
+                    echo "<td class=\"acierto\">NUMERO DE DNI</td>";
                     $formatoDesc = false;
                 }
 
@@ -354,7 +354,7 @@
                 // c. Debe contener al menos 1 letra mayúscula y 3 caracteres
                 // especiales (no consecutivos)
 
-                if(preg_match("'^(?=(.[0-9]){2,})(?=.[A-Z])(?=(.*[\W_]){3,}).{8,20}$'", $cad)){
+                if(preg_match("'^(?=(.*[0-9]){2,})(?=.*[A-Z])(?=(.*[\W_]){3,}).{8,20}$'", $cad)){
                     echo "<td class=\"acierto\">CONRTASEÑA</td>";
                     $formatoDesc = false;
                 }
