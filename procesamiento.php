@@ -309,7 +309,7 @@
                 // \.: coincide con un punto decimal. (El punto debe ser escapado con \ porque en las expresiones regulares, el punto tiene un significado especial).
                 // \d+: coincide con uno o más dígitos (números) después del punto decimal.
                 
-                if(preg_match("'\d+\.\d+'", $cad)){
+                if(preg_match("'^\s*\d+\.\d+\s*$'", $cad)){
                     echo "<td class=\"acierto\">NUMERO DECIMAL</td>";
                     $formatoDesc = false;
                 }
@@ -342,10 +342,16 @@
                 // [A-Z] La cadena a continuación debe contener un carácter mayúscula
                 // $ — Fin de la cadena.
 
-                if(preg_match("'^[0-9]{8}[A-Z]$'", $cad)) {
-                    echo "<td class=\"acierto\">NUMERO DE DNI</td>";
-                    $formatoDesc = false;
-                }
+                    $regex = "'^[0-9]{8}[A-Z]$'";
+
+                    preg_match_all($regex, $cad, $coincidencias);
+
+                    // Contamos las coincidencias y verificamos si son más de 2
+                    if (count($coincidencias[0]) == 1) {
+                        echo "<td class=\"acierto\">NUMERO DE DNI</td>";
+                        $formatoDesc = false;
+                    }
+
 
                 // Contraseña (al menos seis caracteres, debe contener
                 // a. Debe tener entre 8 y 20 caracteres.
